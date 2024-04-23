@@ -1,4 +1,4 @@
-import { Kb } from '../schema.js';
+import { DataSet } from '../schema.js';
 import { auth } from './system.js';
 
 export const useKbRoute = (app) => {
@@ -25,7 +25,7 @@ export const useKbRoute = (app) => {
           : {})
       };
 
-      const kbsRaw = await Kb.find(where)
+      const kbsRaw = await DataSet.find(where)
         .skip(start)
         .limit(end - start)
         .sort({ [sort]: order });
@@ -37,15 +37,15 @@ export const useKbRoute = (app) => {
 
         const orderedKb = {
           id: kb._id.toString(),
-          userId: kb.userId,
+          userId: kb.tmbId,
           name: kb.name,
-          tags: kb.tags,
+          // tags: kb.tags,
           avatar: kb.avatar
         };
 
         kbs.push(orderedKb);
       }
-      const totalCount = await Kb.countDocuments(where);
+      const totalCount = await DataSet.countDocuments(where);
       res.header('Access-Control-Expose-Headers', 'X-Total-Count');
       res.header('X-Total-Count', totalCount);
       res.json(kbs);

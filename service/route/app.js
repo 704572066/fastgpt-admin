@@ -1,4 +1,4 @@
-import { App, Kb } from '../schema.js';
+import { App, DataSet } from '../schema.js';
 import { auth } from './system.js';
 
 export const useAppRoute = (app) => {
@@ -20,26 +20,26 @@ export const useAppRoute = (app) => {
       const modelsRaw = await App.find(where)
         .skip(start)
         .limit(end - start)
-        .sort({ [sort]: order, 'share.isShare': -1, 'share.collection': -1 });
+        // .sort({ [sort]: order, 'share.isShare': -1, 'share.collection': -1 });
 
       const models = [];
-
+      // console.log(modelsRaw.length);
       for (const modelRaw of modelsRaw) {
         const app = modelRaw.toObject();
 
         // 获取与模型关联的知识库名称
-        const kbNames = [];
-        for (const kbId of app.chat.relatedKbs) {
-          const kb = await Kb.findById(kbId);
-          kbNames.push(kb.name);
-        }
+        // const kbNames = [];
+        // for (const kbId of app.chat.relatedKbs) {
+        //   const kb = await DataSet.findById(kbId);
+        //   kbNames.push(kb.name);
+        // }
 
         const orderedModel = {
           id: app._id.toString(),
-          userId: app.userId,
+          // userId: app.userId,
           name: app.name,
           intro: app.intro,
-          relatedKbs: kbNames, // 将relatedKbs的id转换为相应的Kb名称
+          // relatedKbs: kbNames, // 将relatedKbs的id转换为相应的Kb名称
           systemPrompt: app.chat?.systemPrompt || '',
           temperature: app.chat?.temperature || 0,
           'share.topNum': app.share?.topNum || 0,

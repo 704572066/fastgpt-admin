@@ -63,35 +63,36 @@ const paySchema = new mongoose.Schema({
 });
 
 // 新增: 定义 kb 模型
-const kbSchema = new mongoose.Schema({
-  userId: mongoose.Schema.Types.ObjectId,
+const datasetSchema = new mongoose.Schema({
+  _id: mongoose.Schema.Types.ObjectId,
+  tmbId: mongoose.Schema.Types.ObjectId,
   avatar: String,
   name: String,
-  tags: [String],
   updateTime: Date,
+  permission: String,
   __v: Number
 });
 
 const appSchema = new mongoose.Schema({
-  userId: mongoose.Schema.Types.ObjectId,
+  _id: mongoose.Schema.Types.ObjectId,
   name: String,
   avatar: String,
-  status: String,
+  permission: String,
   intro: String,
-  share: {
-    topNum: Number,
-    isShare: Boolean,
-    isShareDetail: Boolean,
-    intro: String,
-    collection: Number
-  },
-  security: {
-    domain: [String],
-    contextMaxLen: Number,
-    contentMaxLen: Number,
-    expiredTime: Number,
-    maxLoadAmount: Number
-  },
+  // share: {
+  //   topNum: Number,
+  //   isShare: Boolean,
+  //   isShareDetail: Boolean,
+  //   intro: String,
+  //   collection: Number
+  // },
+  // security: {
+  //   domain: [String],
+  //   contextMaxLen: Number,
+  //   contentMaxLen: Number,
+  //   expiredTime: Number,
+  //   maxLoadAmount: Number
+  // },
   updateTime: Date
 });
 
@@ -114,8 +115,8 @@ const SystemSchema = new mongoose.Schema({
   }
 });
 
-export const App = mongoose.models['model'] || mongoose.model('model', appSchema);
-export const Kb = mongoose.models['kb'] || mongoose.model('kb', kbSchema);
+export const App = mongoose.models['app'] || mongoose.model('app', appSchema);
+export const DataSet = mongoose.models['dataset'] || mongoose.model('dataset', datasetSchema);
 export const User = mongoose.models['user'] || mongoose.model('user', UserSchema);
 export const Pay = mongoose.models['pay'] || mongoose.model('pay', paySchema);
 export const System = mongoose.models['system'] || mongoose.model('system', SystemSchema);
